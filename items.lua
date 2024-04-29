@@ -40,13 +40,13 @@ local itemIDs = {
 }
 
 -- Function to get the item ID based on the item name
-local function getID(itemName)
+function getID(itemName)
     -- Return the item ID, or nil if the item is not defined
     return itemIDs[itemName]
 end
 
 
-local function pullFromDrawer(target, itemName, amount)
+function pullFromDrawer(target, itemName, amount)
     local items = drawer.list()
     if items then
         for slot, item in pairs(items) do
@@ -62,7 +62,8 @@ end
 
 
 --Item must be already be present in drawer wall to work
-local function isBelowQuantity(itemName, threshold)
+function isBelowQuantity(itemName, threshold)
+    itemName = getID(itemName)
     local items = drawer.list()
     if items then
         for slot, item in pairs(items) do
@@ -77,7 +78,7 @@ end
 --Example usage, checks if sand is below 64, then returns true if below 64
 --isBelowQuantity("minecraft,sand",64)
 
-local function itemCount(itemName)
+function itemCount(itemName)
     local count = 0
     local items = drawer.list()
     if items then
@@ -90,3 +91,11 @@ local function itemCount(itemName)
     return count
 end
 
+
+return {
+    getID = getID,
+    pullFromDrawer = pullFromDrawer,
+    isBelowQuantity = isBelowQuantity,
+    itemCount = itemCount
+
+}
