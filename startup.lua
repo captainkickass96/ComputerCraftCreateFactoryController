@@ -22,6 +22,20 @@ local function isBelowQuantity(itemName, threshold)
     end
     return false
 end
+
+local function itemCount(itemName)
+    local count = 0
+    local items = drawer.list()
+    if items then
+        for slot, item in pairs(items) do
+            if item.name == itemName then
+                count = item.count
+            end
+        end
+    end 
+    return count
+end
+
 --Example usage, checks if sand is below 64, then returns true if below 64
 --isBelowQuantity("minecraft,sand",64)
 
@@ -212,8 +226,11 @@ while true do
 
         print("Currently producing: ", prevoutput)
         monitor.write("Currently producing: ")
+        monitor.setCursorPos(1,2)
         monitor.write(prevoutput)
-       
+        monitor.setCursorPos(1,3)
+        monitor.write("Total: ")
+        monitor.write(itemCount(prevoutput))
     end
     sleep(1)
 end
